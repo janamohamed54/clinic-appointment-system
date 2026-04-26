@@ -25,6 +25,30 @@ const db = createPool({
     */
 });
 
+async function initDB() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS student (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255),
+      roll_number VARCHAR(50),
+      class VARCHAR(50)
+    )
+  `);
+
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS teacher (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255),
+      subject VARCHAR(100),
+      class VARCHAR(50)
+    )
+  `);
+
+  console.log("Database tables ready");
+}
+
+initDB();
+
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
     // Handle the error appropriately, e.g., log it or send an alert
